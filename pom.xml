@@ -1,0 +1,219 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Generado con el arquetipo: standalone-archetype http://pimpam.googlecode.com -->
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<!-- Identificador del componente -->
+	<groupId>com.softwaresano.examples.calculator</groupId>
+	<artifactId>adder-AceptanceTest</artifactId>
+	<version>0.0.3-SNAPSHOT</version>
+	<packaging>pom</packaging>
+	<name>adder-AceptanceTest</name>
+	<description>Calculadora web. En este ejemplo se utilizan test de aceptación con concordion</description>
+	<organization>
+		<name>${companyName}</name>
+		<url>${companyUrl}</url>
+	</organization>
+	<url>${repoPublicSiteUrl}/com.softwaresano.examples.calculator/web-calculator
+    </url>
+	<licenses>
+		<license>
+			<name>GNU GENERAL PUBLIC LICENSE</name>
+			<url>http://www.gnu.org/licenses/gpl-3.0.txt</url>
+			<distribution>GPL 3.0</distribution>
+		</license>
+	</licenses>
+	<developers>
+		<developer>
+			<id>carlosg</id>
+			<name>Carlos Enrique Gómez Gómez</name>
+			<email>carlosg@softwaresano.com</email>
+			<roles>
+				<role>developer</role>
+			</roles>
+			<organization>softwaresano.com</organization>
+			<timezone>+1</timezone>
+		</developer>
+	</developers>
+	<!-- Entorno de integración contínua -->
+	<!-- [MODIFICAR] Añadir todos los correos a los que llegarán las notificaciones 
+		de errores o solución de errores -->
+	<ciManagement>
+		<system>${continousIntegrationSystem}</system>
+		<url>${continousIntegrationSystemUrl}job/Adder-AcceptanceTest</url>
+		<notifiers>
+			<notifier>
+				<type>mail</type>
+				<sendOnError>true</sendOnError>
+				<sendOnFailure>true</sendOnFailure>
+				<sendOnSuccess>false</sendOnSuccess>
+				<sendOnWarning>false</sendOnWarning>
+				<configuration>
+					<address>carlosg@softwaresano.com</address>
+				</configuration>
+			</notifier>
+			<!-- notifier> <type>mail</type> <configuration> <address>usuario1@foo.com</address> 
+				</configuration> </notifier> <notifier> <type>mail</type> <configuration> 
+				<address>usuario2@foo.com</address> </configuration> </notifier -->
+		</notifiers>
+	</ciManagement>
+	<!-- Configuración del SCM (SVN) -->
+	<!-- [MODIFICAR] Poner las urls del SVN correspondiente, sin utilizar propiedades -->
+	<scm>
+		<connection>scm:git:https://github.com/carlosegg/Adder-AcceptanceTest.git</connection>
+		<developerConnection>scm:git:git://github.com/carlosegg/Adder-AcceptanceTest.git</developerConnection>
+		<url>http://pimpam.googlecode.com/svn/trunk/web-calculator</url>
+	</scm>
+	<build>
+		<plugins>
+			<!-- modificar las opciones del compilador -->
+			<plugin>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>2.3.2</version>
+				<configuration>
+					<source>${jvm.version}</source>
+					<target>${jvm.version}</target>
+					<encoding>${project.build.sourceEncoding}</encoding>
+					<debug>${compilerInfoDebug}</debug>
+					<optimize>${compilerOptimize}</optimize>
+					<showWarnings>${compilerShowWarnings}</showWarnings>
+					<showDeprecation>${compilerShowDeprecation}</showDeprecation>
+					<verbose>${compilerVerbose}</verbose>
+				</configuration>
+			</plugin>
+			<!-- Generación de test -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<version>${maven-surefire-plugin.version}</version>
+				<executions>
+					<execution>
+						<id>it-test</id>
+						<phase>integration-test</phase>
+						<goals>
+							<goal>test</goal>
+						</goals>
+						<configuration>
+							<excludes>
+								<exclude>**/test/Component.java</exclude>
+							</excludes>
+							<includes>
+								<include>**/test/acceptance/*.java</include>
+							</includes>
+							<systemPropertyVariables>
+								<concordion.output.dir>target/site/concordion</concordion.output.dir>
+							</systemPropertyVariables>
+
+						</configuration>
+					</execution>
+
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+	<dependencies>
+		<!-- Dependencias internas -->
+
+		<!-- Dependencias externas -->
+		<dependency>
+			<groupId>commons-logging</groupId>
+			<artifactId>commons-logging</artifactId>
+			<version>1.1.1</version>
+			<scope>compile</scope>
+			<exclusions>
+				<exclusion>
+					<groupId>javax.servlet</groupId>
+					<artifactId>servlet-api</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>logkit</groupId>
+					<artifactId>logkit</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>avalon-framework</groupId>
+					<artifactId>avalon-framework</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<dependency>
+			<groupId>log4j</groupId>
+			<artifactId>log4j</artifactId>
+			<version>1.2.16</version>
+			<scope>runtime</scope>
+			<exclusions>
+				<exclusion>
+					<groupId>com.sun.jdmk</groupId>
+					<artifactId>jmxtools</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>com.sun.jmx</groupId>
+					<artifactId>jmxri</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>javax.jms</groupId>
+					<artifactId>jms</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>javax.mail</groupId>
+					<artifactId>mail</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>javax.activation</groupId>
+					<artifactId>activation</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<!-- Dependencias de test -->
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>${junit.version}</version>
+			<scope>test</scope>
+		</dependency>
+		<!-- Necesaria para las librerías de test que funcionen con otra versión 
+			de JUNIT por ejemplo spring-test funciona con JUNIT 3.8.1 -->
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit-dep</artifactId>
+			<version>${junit.version}</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>net.sourceforge.cobertura</groupId>
+			<artifactId>cobertura</artifactId>
+			<version>1.9.4.1</version>
+			<scope>provided</scope>
+			<!-- Workaround para el plugin de cobertura -->
+		</dependency>
+		<dependency>
+			<groupId>org.concordion</groupId>
+			<artifactId>concordion</artifactId>
+			<version>1.3.0</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.seleniumhq.selenium</groupId>
+			<artifactId>selenium-server</artifactId>
+			<version>${seleniumserver.version}</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.seleniumhq.selenium.client-drivers</groupId>
+			<artifactId>selenium-java-client-driver</artifactId>
+			<version>1.0.2</version>
+			<scope>test</scope>
+		</dependency>
+	</dependencies>
+	<properties>
+		<!-- Forzamos a los plugins a utilizar UTF-8, para evitar problemas con 
+			los encodings por defectos de los diferentes sistemas operativos -->
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+		<seleniumserver.version>2.21.0</seleniumserver.version>
+		<tomcat.version>7.0.27</tomcat.version>
+		<copyright.year>2012</copyright.year>
+		<junit.version>4.10</junit.version>
+		<jvm.version>1.5</jvm.version>
+		<maven-surefire-plugin.version>2.12</maven-surefire-plugin.version>
+	</properties>
+</project>
+
